@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.dao.mapper.UserMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.cn.model.Userinfo">
+        <id column="id" property="id" />
+        <result column="user_name" property="userName" />
+        <result column="user_sex" property="userSex" />
+        <result column="user_img" property="userImg" />
+        <result column="user_headimg" property="userHeadimg" />
+        <result column="user_phone" property="userPhone" />
+        <result column="password" property="password" />
+        <result column="birthday" property="birthday" />
+        <result column="create_day" property="createDay" />
+        <result column="update_day" property="updateDay" />
+        <result column="status" property="status" />
+        <result column="price" property="price" />
+        <result column="yzm" property="yzm" />
+    </resultMap>
+
+    <select id="findUserinfoById" parameterType="String" resultMap="BaseResultMap">
+        SELECT id,user_name,user_sex FROM so_user_info WHERE id = #{id}
+    </select>
+
+    <select id="findByUsername" resultType="com.cn.model.Userinfo" >
+        SELECT id,password FROM so_user_info WHERE user_name=#{userName}
+    </select>
+
+    <select id="findUserById" resultType="com.cn.model.Userinfo" >
+        SELECT user_name,password
+        FROM so_user_info
+        WHERE
+        id=#{id}
+    </select>
+
+    <!-- 新增手机号-->
+    <insert id="addUser"  parameterType="com.cn.model.Userinfo">
+        insert into so_user_info (user_phone,password,user_name) values (#{userPhone},#{password},#{userPhone})
+    </insert>
+
+    <!-- 修改用户信息 -->
+    <update id="updatepassword" parameterType="com.cn.model.Userinfo">
+        update so_user_info
+        <set>
+            <if test="password != null and password!=''">password=#{null}</if>
+        </set>
+        <where>
+            <if test="userPhone != userPhone">userPhone=#{userPhone}</if>
+        </where>
+    </update>
+
+</mapper>
